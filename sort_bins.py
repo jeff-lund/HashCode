@@ -1,7 +1,6 @@
 from photos import Photo
 from photos import Bin
 from photos import preprocessor
-from select import *
 
 
 def sort_bins(photo_set, max_tags):

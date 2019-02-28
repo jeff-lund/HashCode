@@ -1,42 +1,36 @@
-def max_tags(photos):
-  max = 0
-  for p in photos:
-    if len(p.tags) > max_tags:
-      max_tags = len(p.tags)
-  return max
+from photos import Photo
+from photos import Bin
+from photos import preprocessor
+
+# BINS
+#FIXME add method for getting max tags
+MAX_TAGS = 51
+
+def sort_bins():
+  """ Returns bins, sorted in descending order. Note bins are labeled at index +1 (index 0 count, bins -> index +1) """
+  bins = [Bin(i+1) for i in range(MAX_TAGS)].reverse()
+  # assign photos to bins
+  photo_set = preprocessor('b_lovely_landscapes.txt')
+
+  while photo_set:
+    curr_p = photo_set.pop()
+    idx = len(curr_p.tags)
+    bins[idx -1] = bins[idx-1].add(curr_p)
+  return bins
 
 
+# start both lists from same seed image
+slideshow_front = []
+slideshow_back = []
 
+# choose first image, P_1
+# --> choose randomly from highest bin, b
+# set current_bin to b
 
-def select(bins):
-  # start both lists from same seed image
-  slideshow_front = []
-  slideshow_back = []
-  # choose first image, P_1
-  # --> choose randomly from highest bin, b
-  # set current_bin to b
-  current_bin = 0
-  current_image = bin[curent_bin].pop()
-  slideshow_front.append(current_image)
-  slideshow_back.append(current_image)
+# (int division)
 
-  while bins[current_bin]:
-    flag = False
-    threshold = bins[current_bin].num_tags // 2 #fix me?
-    for image in bins[current_bin]:
-      if (current_image.tags & image.tags) > threshold:
-        slideshow_front.append(image)
-        current_image = image
-        bins[current_bin].remove(image)
-        flag = True
-    
-    if not flag or not bins[current_bin]:
-      if current_bin == len(bins) - 1:
-        return slideshow_front
-      current_bin += 1
-
-
-
+# make sure to calculate n/2 - x based on A and B:
+# --> if B has 9, and A has 10 tags, use 9/2 - x (not 10/2 -x)
 
 # choose next image, n_i
 # alternate between two slideshow lists:
