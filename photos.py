@@ -138,14 +138,16 @@ def get_max_tags(photos):
     for p in photos:
         if len(p.tags) > max_tags:
             max_tags = len(p.tags)
-    print(max_tags)
+    return max_tags
 
 
 if __name__ == '__main__':
     fname = argv[1]
+    wname = fname + "_submission.txt"
     photos, vphotos = preprocessor(fname)
     photos = recombination(photos, vphotos)
     l = len(photos)
     max_tags = get_max_tags(photos)
     bins = sort_bins(photos, max_tags)
     sub = selection(bins, max_tags, l)
+    writeout(wname, sub)
