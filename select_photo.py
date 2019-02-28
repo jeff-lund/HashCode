@@ -8,7 +8,8 @@ MAX_TAGS = 51
 
 
 def sort_bins():
-  bins = [Bin(i+1) for i in range(MAX_TAGS)]
+  """ Returns bins, sorted in descending order. Note bins are labeled at index +1 (index 0 count, bins -> index +1) """
+  bins = [Bin(i+1) for i in range(MAX_TAGS)].reverse()
   # assign photos to bins
   photo_set = preprocessor('b_lovely_landscapes.txt')
 
