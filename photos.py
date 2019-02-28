@@ -81,6 +81,8 @@ while len(unused) > 1:
     unused.pop(max_ind)
 print(len(unused))
 print(len(photos))
+
+# tag count
 max_tags = 0
 for p in photos:
     if len(p.tags) > max_tags:
