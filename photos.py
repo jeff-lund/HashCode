@@ -29,9 +29,9 @@ for entry in data[1:]:
     n_tags = temp[1]
     tags = set(temp[2:])
     if o == 'H':
-        photos.append(Photo(id, o, tags))
+        photos.add(Photo(id, o, tags))
     else:
-        v_photos.append(Photo(id, o, tags))
+        v_photos.add(Photo(id, o, tags))
     id += 1
 
 # Naive recombination of vertical photos
@@ -55,7 +55,7 @@ if v_photos:
                 if current.tags.isdisjoint(p.tags):
                     temp = Photo([current.id, u.id], 'H', current.tags | u.tags)
                     photos.add(temp)
-                    v_photos.remove(u)
+                    v_photos.remove(p)
                     matched = True
                     break
         if not matched:
