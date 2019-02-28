@@ -6,6 +6,8 @@ def select_(bins):
   # --> choose randomly from highest bin, b
   # set current_bin to b
   current_bin = 0
+  max_bin = len(bins)
+  x = 0
   while not bins[current_bin].photos:
       current_bin += 1
 
@@ -13,16 +15,15 @@ def select_(bins):
   slideshow_front.append(current_image)
   slideshow_back.append(current_image)
 
-  while bins[current_bin].photos:
-    flag = False
-    threshold = bins[current_bin].num_tags // 2 #fix me?
+  while bins[current_bin].photos and current_bin < max_bin:
+    threshold = bins[current_bin].num_tags // 2  - x#fix me?
     for image in bins[current_bin].photos:
       if (current_image.tags & image.tags) >= threshold:
         slideshow_front.append(image)
         current_image = image
         bins[current_bin].photos.remove(image)
-        flag = True
-
+        x = 0
     if not bins[current_bin].photos:
       current_bin += 1
+      x += 1
   return slideshow_front
