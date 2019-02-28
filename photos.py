@@ -16,26 +16,25 @@ class Bin:
 def score(current, next):
     pass
 
-fname = argv[1]
+def preprocessor(fname):
+    with open(fname, 'r') as f:
+        data = [line.strip() for line in f]
 
-with open(fname, 'r') as f:
-    data = [line.strip() for line in f]
+    num_photos = int(data[0])
+    id = 0
+    photos = set()
+    v_photos = set()
 
-num_photos = int(data[0])
-id = 0
-photos = set()
-v_photos = set()
-
-for entry in data[1:]:
-    temp = entry.split(' ')
-    o = temp[0]
-    n_tags = temp[1]
-    tags = set(temp[2:])
-    if o == 'H':
-        photos.add(Photo(id, o, tags))
-    else:
-        v_photos.add(Photo(id, o, tags))
-    id += 1
+    for entry in data[1:]:
+        temp = entry.split(' ')
+        o = temp[0]
+        n_tags = temp[1]
+        tags = set(temp[2:])
+        if o == 'H':
+            photos.add(Photo(id, o, tags))
+        else:
+            v_photos.add(Photo(id, o, tags))
+        id += 1
 
 # Naive recombination of vertical photos
 print("Num hphotos : {} | vphotos {}".format(len(photos), len(v_photos)))
