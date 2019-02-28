@@ -23,6 +23,10 @@ def submission(fname, ids):
         for line in ids:
             f.write(' '.join(map(str, line)) + '\n')
 
+# n = number of tags
+# offset
+def threshold(n, offset):
+    return (n//2) - offset
 
 def preprocessor(fname):
     with open(fname, 'r') as f:
@@ -97,6 +101,7 @@ def get_max_tags(photos):
         if len(p.tags) > max_tags:
             max_tags = len(p.tags)
     print(max_tags)
+
 
 if __name__ == '__main__':
     fname = argv[1]
