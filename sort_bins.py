@@ -11,5 +11,7 @@ def sort_bins(photo_set, max_tags):
   while photo_set:
     curr_p = photo_set.pop()
     idx = len(curr_p.tags)
-    bins[idx -1] = bins[idx-1].photos.add(curr_p)
+    for b in bins:
+        if b.num_tags == idx:
+            b.photos.add(curr_p)
   return bins
