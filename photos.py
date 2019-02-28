@@ -1,5 +1,6 @@
 from sys import argv
 import random
+from time import time
 
 class Photo:
     def __init__(self, id, o, tags):
@@ -13,10 +14,18 @@ class Bin:
         self.num_tags = n
         self.photos = set()
 
-def score(current, next):
-    pass
+def score(a, b):
+    return min(map(len, [a & b, a - b, b - a]))
+
+def submission(fname, ids):
+    with open(fname, 'w') as f:
+        f.write(str(len(ids)) + '\n')
+        for line in ids:
+            f.write(' '.join(map(str, line)) + '\n')
+
 
 fname = argv[1]
+wname = fname + "_submission.txt"
 
 with open(fname, 'r') as f:
     data = [line.strip() for line in f]
@@ -26,6 +35,7 @@ id = 0
 photos = set()
 v_photos = set()
 
+t0 = time()
 for entry in data[1:]:
     temp = entry.split(' ')
     o = temp[0]
@@ -36,8 +46,9 @@ for entry in data[1:]:
     else:
         v_photos.add(Photo(id, o, tags))
     id += 1
-
+print("time for initial preproc:", time()-t0)
 # Naive recombination of vertical photos
+t0 = time()
 print("Num hphotos : {} | vphotos {}".format(len(photos), len(v_photos)))
 unused = []
 if v_photos:
@@ -81,6 +92,7 @@ while len(unused) > 1:
     unused.pop(max_ind)
 print(len(unused))
 print(len(photos))
+print("recomb time", time() - t0)
 max_tags = 0
 for p in photos:
     if len(p.tags) > max_tags:
