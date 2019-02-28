@@ -13,6 +13,9 @@ class Bin:
         self.num_tags = n
         self.photos = set()
 
+def score(current, next):
+    pass
+
 fname = argv[1]
 
 with open(fname, 'r') as f:
@@ -78,3 +81,8 @@ while len(unused) > 1:
     unused.pop(max_ind)
 print(len(unused))
 print(len(photos))
+max_tags = 0
+for p in photos:
+    if len(p.tags) > max_tags:
+        max_tags = len(p.tags)
+print(max_tags)
