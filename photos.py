@@ -1,6 +1,7 @@
 from sys import argv
 import random
 from time import time
+from sort_bins import *
 
 class Photo:
     def __init__(self, id, o, tags):
@@ -27,6 +28,43 @@ def submission(fname, ids):
 # offset
 def threshold(n, offset):
     return (n//2) - offset
+
+def selection(bins, max_tags, num_photots):
+    k = max_tags
+    ci = 0 # current index
+    current = bins[ci]
+    right = [current]
+    left = [current]
+    flag = True
+    score = 0
+    for _ in num_photos:
+        added = False
+        if bins[ci]:
+            t = threshold(bins[ci].num_tags, 0)
+        else:
+            while not bins[ci]:
+                ni += 1
+            t = threshold(bins[ci].num_tags, ci - ni)
+            ci = ni
+        while not added:
+            ti = ci
+            for element in bins[ti]:
+                if score(current, element) == threshold:
+                    if flag:
+                        right.append(element.id)
+                    else:
+                        left.append(element.id)
+                    score += score(current, element)
+                    current = element
+                    bins[ti].remove(element)
+                    added = True
+                    flag = not flag
+            ti -= 1
+            threshold -= 1
+    print(score)
+    left.reverse()
+    left.pop()
+    return left + right
 
 def preprocessor(fname):
     with open(fname, 'r') as f:
@@ -107,4 +145,7 @@ if __name__ == '__main__':
     fname = argv[1]
     photos, vphotos = preprocessor(fname)
     photos = recombination(photos, vphotos)
+    l = len(photos)
     max_tags = get_max_tags(photos)
+    bins = sort_bins(photos, max_tags)
+    sub = selection(bins, max_tags, l)

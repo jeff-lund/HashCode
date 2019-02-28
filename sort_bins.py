@@ -6,7 +6,7 @@ from photos import preprocessor
 #FIXME add method for getting max tags
 MAX_TAGS = 51
 
-def sort_bins():
+def sort_bins(photo_set, max_tags):
   """ Returns bins, sorted in descending order. Note bins are labeled at index +1 (index 0 count, bins -> index +1) """
   bins = [Bin(i+1) for i in range(MAX_TAGS)].reverse()
   # assign photos to bins
